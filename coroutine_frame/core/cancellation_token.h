@@ -5,10 +5,11 @@
 #ifndef TASK_DO_CANCELLATION_TOKEN_H
 #define TASK_DO_CANCELLATION_TOKEN_H
 
+#include "executor.h"
 #include "task.h"
 #include <atomic>
+#include <chrono>
 #include <memory>
-#include <stdexcept>
 
 // Exception thrown when a task is cancelled
 class task_cancelled : public std::exception {
@@ -53,7 +54,7 @@ class cancellation_check {
         return true; // Don't suspend, check immediately
     }
 
-    void await_suspend(std::coroutine_handle<> h) const noexcept {
+    void await_suspend(std::coroutine_handle<>) const noexcept {
         // Never called since await_ready returns true
     }
 
